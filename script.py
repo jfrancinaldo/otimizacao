@@ -85,7 +85,7 @@ if con.is_connected():
     #se existir 1 ou mais com 20 retorna o array com os titulos correspondentes       
 
 print("cont_armado ",total_armado) #saida esperada 34
-print("total_ganhadores ",total_ganhadores,"\n")   #saida esperada 888424      
+print("total_ganhadores ",ganhadores,"\n")   #saida esperada 888424      
 
 et = time.time()
 elapsed_time = et - st
