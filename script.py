@@ -87,6 +87,7 @@ if con.is_connected():
 print("cont_armado ",total_armado) #saida esperada 34
 print("total_ganhadores ",ganhadores,"\n")   #saida esperada 888424      
 
+
 et = time.time()
 elapsed_time = et - st
 print('Execution time:', elapsed_time, 'seconds')
