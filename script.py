@@ -26,6 +26,7 @@ def check_ganhador(x):
     ganhadores.append(x) 
 
     return ganhadores
+timeini_conn = time.time()
 
 con = mysql.connector.connect(
   host="localhost",
@@ -43,6 +44,9 @@ if con.is_connected():
     records = cursor.fetchall()
     print("Total linhas da tabela: ", cursor.rowcount,"\n")
 
+    
+    saidaconn =  time.time() - timeini_conn
+    print('Execution conn:', saidaconn, 'seconds')
 
     dados_input = ['05','59','46','43','33','56','11','39','25','21','12','23','47','35','53','31','09','48','03','02','30','28','38','36','40','27','34','24','42','22','58','20','32','17','51','55']
 
@@ -55,6 +59,7 @@ if con.is_connected():
     # print(intersection_list)
     total_ganhadores = []
     start = timer()
+    start_for = time.time()
     for row in records:
     #    print("id = ", row[0])
     #    print("idtitulo = ", row[1])
@@ -80,17 +85,14 @@ if con.is_connected():
         #  print("idtitulo ",row[1]," = ", len(list(set(row[4].split(',')) & set(dados_input))), "\n")
         # print("origem  = ", len(list(set(row[4].split(',')) & set(dados_input))), "\n")
     end = timer()
-    print(end - start)
+    print('Execution do FOR:', (time.time()- start_for), 'seconds')
+    
     #se quantidade for 19 print (quantidade com 19)
     #se existir 1 ou mais com 20 retorna o array com os titulos correspondentes       
 
 print("cont_armado ",total_armado) #saida esperada 34
-print("total_ganhadores ",ganhadores,"\n")   #saida esperada 888424      
+print("array titulos ganhadores ",ganhadores,"\n")   #saida esperada 888424      
 
-
-et = time.time()
-elapsed_time = et - st
-print('Execution time:', elapsed_time, 'seconds')
 
 cpu = time.process_time()
 res = cpu - st_cpu
