@@ -4,6 +4,8 @@ mod entry;
 mod solution;
 mod stopwatch;
 
+use std::panic::catch_unwind;
+
 use mysql::{from_row, prelude::Queryable, Opts, OptsBuilder, Pool};
 
 use crate::{
@@ -11,7 +13,7 @@ use crate::{
     solution::{Attempt, Solution},
 };
 
-fn main() {
+fn run() {
     let solution = Solution::from_env();
 
     let numbers_received = solution.numbers_picked.iter().filter(|&&was_picked| was_picked).count();
@@ -59,4 +61,15 @@ fn main() {
         ganhadores.len(),
         ids.iter().map(AsRef::as_ref).intersperse(",").collect::<String>(),
     );
+}
+
+fn main() {
+    catch_unwind(run).unwrap_or_else(|_| {
+        eprintln!("- Aconteceu um erro, rodando novamente");
+
+        catch_unwind(run).unwrap_or_else(|_| {
+            eprintln!("- Aconteceu um erro, abortando a execução");
+            println!("error");
+        });
+    });
 }

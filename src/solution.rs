@@ -47,16 +47,20 @@ impl Solution {
     }
 
     pub fn from_env() -> Self {
-        let to_str_panicking = |arg: &'static OsStr| arg.to_str().expect("Received invalid UTF-8");
+        let to_str_panicking =
+            |arg: &'static OsStr| arg.to_str().expect("Problema argumento invalido encoding não UTF-8");
 
-        let parse_u8_panicking = |arg: &str| arg.parse().unwrap();
+        let parse_u8_panicking = |arg: &str| {
+            arg.parse().unwrap_or_else(|err| {
+                panic!("Failed to parse integer '{arg}': {err}");
+            })
+        };
 
         argv::iter()
-            .skip(1)
-            .next()
+            .nth(1)
             .map(to_str_panicking)
-            .expect("missing arguments, numbers to be checked")
-            .split(",")
+            .expect("Missing arguments, numbers to be checked")
+            .split(',')
             .map(parse_u8_panicking)
             .collect()
     }
