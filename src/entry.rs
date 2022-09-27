@@ -40,7 +40,7 @@ impl FromRow for Entry {
 fn parse_u8_panicking(num: &str) -> u8 {
     let num_is_numeric = || num.chars().all(char::is_numeric);
 
-    if unlikely(num_is_numeric()) {
+    if !unlikely(num_is_numeric()) {
         panic!("Problema: dezena '{num}' não é uma dezena válida");
     }
 
